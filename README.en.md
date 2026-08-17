@@ -8,6 +8,10 @@ A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH) plug
 **auto-creates a project record per workspace, auto-syncs project progress, and lets a
 fresh session pick up where the last one ran out of context.**
 
+## Demo
+
+![dsh-project-progress demo](assets/demo.gif)
+
 ## Features
 
 1. **Auto-create projects** — start a conversation in any workspace and the plugin
