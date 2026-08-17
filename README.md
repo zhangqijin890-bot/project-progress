@@ -1,5 +1,9 @@
 # dsh-project-progress
 
+[![CI](https://github.com/zhangqijin890-bot/project-progress/actions/workflows/ci.yml/badge.svg)](https://github.com/zhangqijin890-bot/project-progress/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@zhangqijin890-bot/dsh-project-progress.svg)](https://www.npmjs.com/package/@zhangqijin890-bot/dsh-project-progress)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 DeepSeek Harness（DSH）插件：**为每个项目自动创建进展记录、自动同步项目进展**，
 当上下文满了开新会话时，新会话能快速了解项目进展、无缝接手。
 

@@ -1,5 +1,9 @@
 # dsh-project-progress
 
+[![CI](https://github.com/zhangqijin890-bot/project-progress/actions/workflows/ci.yml/badge.svg)](https://github.com/zhangqijin890-bot/project-progress/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@zhangqijin890-bot/dsh-project-progress.svg)](https://www.npmjs.com/package/@zhangqijin890-bot/dsh-project-progress)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH) plugin that
 **auto-creates a project record per workspace, auto-syncs project progress, and lets a
 fresh session pick up where the last one ran out of context.**
