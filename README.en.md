@@ -16,6 +16,8 @@ fresh session pick up where the last one ran out of context.**
 
 1. **Auto-create projects** — start a conversation in any workspace and the plugin
    creates a project record under `$DSH_HOME/projects/<project-key>/`.
+   **One workspace always maps to exactly one project directory** (keyed by the
+   workspace path; session titles are display-only).
 2. **Auto-sync progress** — at every turn end it appends `request → reply → tools` to a
    structured log (`log.json`) and regenerates a human-readable `progress.md`; an LLM
    digest of the "current state" (`digest.txt`) is refreshed on a debounced interval
@@ -28,7 +30,8 @@ fresh session pick up where the last one ran out of context.**
    - tools `get_project_progress` / `update_project_progress` let the model read
      progress and leave handoff notes;
    - `/project` command shows progress, `/project sync` refreshes the digest,
-     `/project path` prints the progress file path.
+     `/project path` prints the progress file path, `/project merge` merges
+     legacy per-title directories of the same workspace (also auto-run at boot).
 
 ## Storage layout
 
@@ -40,6 +43,11 @@ $DSH_HOME/projects/<project-key>/
 ├── digest.txt     # latest LLM digest
 └── progress.md    # human-readable progress document (generated)
 ```
+
+> The project-key is derived from the **workspace path** only, so all sessions of a
+> workspace land in the same directory regardless of their titles. `/project merge`
+> (and a boot-time auto-migration) consolidates legacy directories that were created
+> per session title by older versions.
 
 ## Install
 
@@ -76,6 +84,7 @@ Restart `dsh web` — server-side plugins load at boot.
 | `/project sync` | force-refresh the LLM digest |
 | `/project path` | print the progress file path |
 | `/project backfill` | build project files for all historical sessions |
+| `/project merge` | merge legacy per-title project dirs of the same workspace |
 | model calls `get_project_progress` | read progress (handy when context is short) |
 | model calls `update_project_progress` | leave a handoff note for later sessions |
 

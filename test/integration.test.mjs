@@ -139,4 +139,46 @@ const backfillResult2 = await cmdHandler({ agent: { session }, rawInput: "backfi
 const histLog2 = existsSync(join(tmp, histDir, "log.json")) ? JSON.parse(readFileSync(join(tmp, histDir, "log.json"), "utf8")) : [];
 console.log("二次 backfill 新增条数:", histLog2.length - before, "（应为 0）");
 
+// 9) 旧版本目录合并：同一工作区两个不同标题的目录 → 合并成一个
+import { mkdirSync, writeFileSync } from "node:fs";
+const legacyPath = "/tmp/旧版工作区";
+const legacyA = join(tmp, "会话A标题-ed1e5e");
+const legacyB = join(tmp, "会话B标题-ed1e5e");
+mkdirSync(legacyA, { recursive: true });
+mkdirSync(legacyB, { recursive: true });
+writeFileSync(join(legacyA, "project.json"), JSON.stringify({
+	version: 1, id: "会话A标题-ed1e5e", title: "会话A标题", path: legacyPath,
+	createdAt: "2026-08-01T00:00:00.000Z", updatedAt: "2026-08-02T00:00:00.000Z",
+	sessions: [{ id: "s-a", title: "会话A标题", createdAt: "2026-08-01T00:00:00.000Z", lastActivityAt: "2026-08-02T00:00:00.000Z", turns: 2, maxTurn: 2 }],
+	counters: { turns: 2 }
+}));
+writeFileSync(join(legacyA, "log.json"), JSON.stringify([
+	{ time: "2026-08-01T00:00:00.000Z", sessionId: "s-a", sessionTitle: "会话A标题", turn: 1, request: "A问题1", outcome: "A答复1", tools: [], reason: "completed" },
+	{ time: "2026-08-02T00:00:00.000Z", sessionId: "s-a", sessionTitle: "会话A标题", turn: 2, request: "A问题2", outcome: "A答复2", tools: [], reason: "completed" }
+]));
+writeFileSync(join(legacyA, "notes.json"), JSON.stringify([{ time: "2026-08-02T00:00:00.000Z", sessionId: "s-a", note: "A 的交接笔记" }]));
+writeFileSync(join(legacyA, "digest.txt"), "A 目录的旧摘要");
+writeFileSync(join(legacyB, "project.json"), JSON.stringify({
+	version: 1, id: "会话B标题-ed1e5e", title: "会话B标题", path: legacyPath,
+	createdAt: "2026-08-03T00:00:00.000Z", updatedAt: "2026-08-04T00:00:00.000Z",
+	sessions: [{ id: "s-b", title: "会话B标题", createdAt: "2026-08-03T00:00:00.000Z", lastActivityAt: "2026-08-04T00:00:00.000Z", turns: 1, maxTurn: 1 }],
+	counters: { turns: 1 }
+}));
+writeFileSync(join(legacyB, "log.json"), JSON.stringify([
+	{ time: "2026-08-04T00:00:00.000Z", sessionId: "s-b", sessionTitle: "会话B标题", turn: 1, request: "B问题", outcome: "B答复", tools: [], reason: "completed" }
+]));
+const mergeResult = await cmdHandler({ agent: { session }, rawInput: "merge" });
+console.log("--- merge ---");
+console.log(mergeResult.text);
+const mergedDir = readdirSync(tmp).find((d) => d.includes("旧版工作区"));
+const mergedMeta = JSON.parse(readFileSync(join(tmp, mergedDir, "project.json"), "utf8"));
+const mergedLog = JSON.parse(readFileSync(join(tmp, mergedDir, "log.json"), "utf8"));
+console.log("合并目录:", mergedDir, "| 会话数:", mergedMeta.sessions.length, "| 回合数:", mergedMeta.counters.turns);
+console.log("合并日志条数:", mergedLog.length, "（应为 3：A1+A2+B1）");
+console.log("含 A 与 B 的请求:", mergedLog.some((e) => e.request === "A问题1") && mergedLog.some((e) => e.request === "B问题"));
+console.log("旧目录已删除:", !existsSync(legacyA) && !existsSync(legacyB));
+const mergedNotes = JSON.parse(readFileSync(join(tmp, mergedDir, "notes.json"), "utf8"));
+console.log("合并笔记含 A 的:", mergedNotes.some((n) => n.note === "A 的交接笔记"));
+console.log("digest 已保留:", existsSync(join(tmp, mergedDir, "digest.txt")));
+
 console.log("\nALL OK");
