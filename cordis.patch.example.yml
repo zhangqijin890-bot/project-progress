@@ -1,0 +1,11 @@
+# dsh-project-progress 的 cordis.patch.yml 片段
+# 把下面这段追加到 profile 的 cordis.patch.yml 顶层数组末尾：
+#   ~/.dsh/profiles/web/cordis.patch.yml
+
+- insert:
+    - id: project-progress
+      name: 'dsh-project-progress'
+      config:
+        autoInject: true
+        llmDigest: true
+        digestMinIntervalMs: 60000

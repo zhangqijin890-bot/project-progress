@@ -1,0 +1,42 @@
+{
+  "name": "dsh-project-progress",
+  "version": "0.1.0",
+  "description": "DeepSeek Harness plugin: auto-create a project record per workspace, auto-sync project progress, and let a fresh session pick up where the last one ran out of context (DSH 插件：自动记录项目进展，新会话快速接手)",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangqijin890-bot/project-progress.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "project",
+    "progress",
+    "handoff"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-agent": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-session": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tools": "^0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.0"
+  },
+  "scripts": {
+    "test": "node test/integration.test.mjs && node test/digest-inject.test.mjs"
+  }
+}

@@ -1,0 +1,11 @@
+# dependencies / local install artifacts
+node_modules/
+
+# atomic write temp files left by the plugin on crash
+*.tmp-*
+
+# OS noise
+.DS_Store
+
+# logs
+*.log
