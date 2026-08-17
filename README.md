@@ -42,8 +42,8 @@ $DSH_HOME/projects/<project-key>/
 在 profile 目录（例如 `~/.dsh/profiles/web`）安装本插件：
 
 ```sh
-dsh plugin --profile web add dsh-project-progress
-# 等价于在 ~/.dsh/profiles/web 下执行：pnpm add dsh-project-progress
+dsh plugin --profile web add @zhangqijin890-bot/dsh-project-progress
+# 等价于在 ~/.dsh/profiles/web 下执行：pnpm add @zhangqijin890-bot/dsh-project-progress
 ```
 
 > 注意：如果 profile 的 `pnpm-workspace.yaml` 里 `autoInstallPeers: false`（DSH 默认），
@@ -55,7 +55,7 @@ dsh plugin --profile web add dsh-project-progress
 1. 把插件链接进 profile 的 node_modules：
 
    ```sh
-   ln -sfn <本插件源码路径> ~/.dsh/profiles/web/node_modules/dsh-project-progress
+   ln -sfn <本插件源码路径> ~/.dsh/profiles/web/node_modules/@zhangqijin890-bot/dsh-project-progress
    ```
 
 2. 让插件源码旁的 node_modules 能解析 `@deepseek-ai/*` 依赖：
@@ -72,7 +72,7 @@ dsh plugin --profile web add dsh-project-progress
 ```yaml
 - insert:
     - id: project-progress
-      name: 'dsh-project-progress'
+      name: '@zhangqijin890-bot/dsh-project-progress'
       config:
         autoInject: true
         llmDigest: true
@@ -115,7 +115,7 @@ dsh web
 
 ```sh
 # 从 cordis.patch.yml 删除 project-progress 那一行 insert
-dsh plugin --profile web remove dsh-project-progress
+dsh plugin --profile web remove @zhangqijin890-bot/dsh-project-progress
 # 如需删除历史记录：rm -rf $DSH_HOME/projects
 ```
 

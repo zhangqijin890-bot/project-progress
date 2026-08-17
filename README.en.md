@@ -37,7 +37,7 @@ $DSH_HOME/projects/<project-key>/
 
 ```sh
 # in the profile dir, e.g. ~/.dsh/profiles/web
-dsh plugin --profile web add dsh-project-progress
+dsh plugin --profile web add @zhangqijin890-bot/dsh-project-progress
 ```
 
 Then register the plugin in `~/.dsh/profiles/web/cordis.patch.yml` (see
@@ -46,7 +46,7 @@ Then register the plugin in `~/.dsh/profiles/web/cordis.patch.yml` (see
 ```yaml
 - insert:
     - id: project-progress
-      name: 'dsh-project-progress'
+      name: '@zhangqijin890-bot/dsh-project-progress'
       config:
         autoInject: true
         llmDigest: true

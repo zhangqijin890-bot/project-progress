@@ -4,7 +4,7 @@
 
 - insert:
     - id: project-progress
-      name: 'dsh-project-progress'
+      name: '@zhangqijin890-bot/dsh-project-progress'
       config:
         autoInject: true
         llmDigest: true

@@ -1,6 +1,9 @@
 {
-  "name": "dsh-project-progress",
+  "name": "@zhangqijin890-bot/dsh-project-progress",
   "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "DeepSeek Harness plugin: auto-create a project record per workspace, auto-sync project progress, and let a fresh session pick up where the last one ran out of context (DSH 插件：自动记录项目进展，新会话快速接手)",
   "type": "module",
   "main": "lib/index.js",
